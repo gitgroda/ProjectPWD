@@ -12,11 +12,13 @@ public class Secret
 
     public Secret()
     {
+        
     }
 
     public Secret(byte [] secret)
     {
         this.secret = secret;
+        
     }
 
 

@@ -1,0 +1,13 @@
+# --- .NET Standard ---
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.user
+*.suo
+.vs/
+
+# --- Projektspecifika filer (Viktigt!) ---
+# Dessa filer innehåller secret keys, IV och valv 
+# De ska skapas lokalt vid körning och inte delas i Git.

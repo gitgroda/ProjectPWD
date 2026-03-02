@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using Microsoft.Win32.SafeHandles;
 
-namespace Kod
+namespace Project
 {
     class Program
     {
@@ -12,10 +12,6 @@ namespace Kod
             var enc = new Encryption();
             var client = new Client(path);
 
-            
-            //var secret = enc.Serialize();
-
-            //client.Write(secret);
 
             Secret secret = new Secret(enc.CreateSecret());
             

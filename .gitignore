@@ -1,4 +1,4 @@
-# --- .NET Standard ---
+# .NET filer
 [Bb]in/
 [Oo]bj/
 *.exe
@@ -8,6 +8,7 @@
 *.suo
 .vs/
 
-# --- Projektspecifika filer (Viktigt!) ---
-# Dessa filer innehåller secret keys, IV och valv 
-# De ska skapas lokalt vid körning och inte delas i Git.
+# Projekt-specifika filer (Viktigt för säkerheten!)
+# Dessa skapas lokalt och ska inte delas via Git [cite: 43, 46]
+client.json
+server.json

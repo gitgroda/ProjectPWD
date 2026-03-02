@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using Microsoft.Win32.SafeHandles;
 
-namespace Project
+namespace Kod
 {
     class Program
     {

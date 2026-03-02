@@ -7,22 +7,22 @@ namespace Kod
 {
     public class Client
     {
-        string path;
+        public string clientPath;
 
         public Client(string path)
         {
-            this.path = path;
+            this.clientPath = path;
 
         }
        
 
         public void Write(string secret)
         {
-            if (File.Exists(path))
+            if (File.Exists(clientPath))
             {
-                File.WriteAllText(path, secret);
+                File.WriteAllText(clientPath, secret);
             }
-            else if (!File.Exists(path))
+            else if (!File.Exists(clientPath))
             {
                 System.Console.WriteLine("ERROR: File not found");
             }

@@ -10,19 +10,11 @@ public class Secret
     public byte[] secret { get; set; }
 
 
-    public Secret()
-    {
-        
-    }
-
     public Secret(byte [] secret)
     {
         this.secret = secret;
         
     }
-
-
-
 
 
 }

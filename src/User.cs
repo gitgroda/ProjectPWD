@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Kod
@@ -22,7 +23,12 @@ namespace Kod
             masterPwd = Console.ReadLine();
    
         }
+        public Vault CreateVault()
+        {
+            return new Vault();
+        }
           
     }
+   
     
 }

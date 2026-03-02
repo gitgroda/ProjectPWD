@@ -4,8 +4,12 @@ using System.IO;
 using System.Collections.Generic;
 public class Vault
 {
-    public Dictionary<string, int> VaultData = new Dictionary<string, int>();
-    
+    public Dictionary<string, string> vault {get; set;}
+
+    public Vault()
+    {
+        vault = new Dictionary<string, string>();
+    }
 
 
 }

@@ -9,12 +9,12 @@ public class InitVector
     public byte[] iv {get; set;} 
 
 
-    
-
-    public InitVector(byte[] vector)
+    public InitVector()
     {
-        this.iv = vector;
-        
+        using (Aes aes = Aes.Create())
+        {
+            iv = aes.IV;
+                    
+        }
     }
-   
 }

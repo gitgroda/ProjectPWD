@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Vault
 {
     public Dictionary<string, int> VaultData = new Dictionary<string, int>();
-
+    
 
 
 }

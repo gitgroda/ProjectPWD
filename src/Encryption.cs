@@ -7,14 +7,11 @@ using System.Security.Cryptography;
 public class Encryption
 {
 
-    public byte[] CreateSecret()
-    { 
-        byte [] secret = new byte[16];
-        return(RandomNumberGenerator.GetBytes(16));
-    }
-    public string Serialize(Secret secret)
+   
+    public string Serialize<T>(T data) //serialiserar objekt
         {
-            return(JsonSerializer.Serialize(secret));
+            return(JsonSerializer.Serialize(data));
 
         }
+  
 }

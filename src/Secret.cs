@@ -7,14 +7,11 @@ using Microsoft.VisualBasic;
 
 public class Secret
 {
-    public byte[] secret { get; set; }
+    public byte[] secretKey { get; set; }
 
-
-    public Secret(byte [] secret)
+    public Secret()
     {
-        this.secret = secret;
-        
+        secretKey = RandomNumberGenerator.GetBytes(16);
+    
     }
-
-
 }

@@ -11,5 +11,11 @@ public class Vault
         vault = new Dictionary<string, string>();
     }
 
+    public Dictionary<string, string> Set(string key, string pass) //Skriv över value om key existerar, annars skapas ny key med pass
+    {
+        vault[key] = pass;
+        return vault;
+    }
+
 
 }

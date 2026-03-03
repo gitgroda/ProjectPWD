@@ -9,9 +9,16 @@ public class Encryption
 
    
     public string Serialize<T>(T data) //serialiserar objekt
-        {
-            return(JsonSerializer.Serialize(data));
+    {
+        return(JsonSerializer.Serialize(data));
 
-        }
+    }
+
+    public void Encrypt()
+    {
+        
+
+        
+    }
   
 }

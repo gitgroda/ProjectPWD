@@ -26,7 +26,8 @@ namespace Kod
             }
             else if (!File.Exists(serverPath))
             {
-                System.Console.WriteLine("ERROR: File not found");
+                System.Console.WriteLine("File does not exist, creating new file...");
+                File.WriteAllText(serverPath, secret);
             }
             else
             {

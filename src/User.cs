@@ -23,6 +23,15 @@ namespace Kod
             masterPwd = Console.ReadLine();
    
         }
+        public void Data()
+        {
+            clientPath = @"C:\Users\alfre\OneDrive - Uppsala universitet\SKOLA\Information och IT-säkerhet\Kod\Client.json";
+            
+            serverPath = @"C:\Users\alfre\OneDrive - Uppsala universitet\SKOLA\Information och IT-säkerhet\Kod\server.json";
+ 
+            masterPwd = "password123";
+
+        }
         public Vault Init()
         {
             return new Vault();

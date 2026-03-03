@@ -23,9 +23,17 @@ namespace Kod
             masterPwd = Console.ReadLine();
    
         }
-        public Vault CreateVault()
+        public Vault Init()
         {
             return new Vault();
+        }
+        public void Create()
+        {
+            System.Console.WriteLine("Enter new file path:");
+            string newPath = Console.ReadLine();
+
+            
+
         }
           
     }

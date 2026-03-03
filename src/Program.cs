@@ -36,8 +36,6 @@ namespace Kod
 
             string serVault = enc.Serialize(testVault);
 
-            
-            
 
         }
     }

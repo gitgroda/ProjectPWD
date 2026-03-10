@@ -10,8 +10,14 @@ public class Secret
     public byte[] secretKey { get; set; }
 
     public Secret()
+
     {
-        secretKey = RandomNumberGenerator.GetBytes(16);
-    
+        secretKey = new byte[16];
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(secretKey);
+
+        }
     }
+    
 }

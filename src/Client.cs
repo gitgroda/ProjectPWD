@@ -21,6 +21,7 @@ namespace Kod
             if (File.Exists(clientPath))
             {
                 File.WriteAllText(clientPath, secret);
+                System.Console.WriteLine(clientPath);
             }
             else if (!File.Exists(clientPath))
             {

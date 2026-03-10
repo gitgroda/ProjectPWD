@@ -16,6 +16,4 @@ public class Vault
         vault[key] = pass;
         return vault;
     }
-
-
 }

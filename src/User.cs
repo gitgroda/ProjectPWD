@@ -32,7 +32,7 @@ namespace Kod
             masterPwd = "password123";
 
         }
-        public Vault Init()
+        public Vault CreateVault()
         {
             return new Vault();
         }

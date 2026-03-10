@@ -7,6 +7,7 @@ using System.Runtime.Intrinsics;
 using System.IO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Kod
 {
@@ -35,10 +36,14 @@ namespace Kod
             server.Write(serIV);
 
             
-            Vault testVault = afga.Init();
+            Vault testVault = afga.CreateVault();
+            string serVault = enc.Serialize(testVault);
 
 
+            enc.vaultKey = enc.Derive(afga.masterPwd, secret.secretKey);
 
+            string encryptVault = enc.Serialize(enc.EncryptVault(serVault, secret.secretKey, vector.iv)); //kryptera och serialisera vault
+            System.Console.WriteLine(encryptVault);
 
         }
     }

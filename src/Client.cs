@@ -34,5 +34,19 @@ namespace Kod
                 System.Console.WriteLine("ERROR: Unknown error");
             }
         }
+                public static Client create(string path)  //skapa ny clientfil i ett vault som redan finns
+        {
+            
+
+            if (File.Exists(path))
+            {
+                Console.WriteLine("Connecting to existing vault...");
+            }
+            else
+            {
+                Console.WriteLine("Vault not found. A new file will be created upon first write");
+            }
+            return new Client(path);
+        }
     }
 }

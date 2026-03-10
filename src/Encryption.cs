@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
+using System.Text;
 
 public class Encryption
 {
@@ -29,27 +30,32 @@ public class Encryption
     {
         using (Aes aes = Aes.Create())
         {
+            aes.Key = key;
+            aes.IV = iv;
+
             ICryptoTransform encryptor = aes.CreateEncryptor();
 
-            using (MemoryStream ms = new MemoryStream())
-        {
-            using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-            {
-                using (StreamWriter sw = new StreamWriter(cs))
-                {
-                    sw.Write(plainVault); 
-                }
-            }
-            
-            return ms.ToArray();
-        }
+            byte[] plainBytes = Encoding.UTF8.GetBytes(plainVault);
+
+            return encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
 
         
         } 
-    
-       
-    
+    }
+    public string DecryptVault(string encryptedString, byte[] key, byte[] iv)
+    {
+        byte[] encryptedBytes = Convert.FromBase64String(encryptedString);
 
+        using (Aes aes = Aes.Create()){
+
+            aes.Key = key;
+            aes.IV = iv;
+            ICryptoTransform decryptor = aes.CreateDecryptor();
+
+            byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+            return System.Text.Encoding.UTF8.GetString(decryptedBytes);
+            
+        }
     }
 
 

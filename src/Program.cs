@@ -8,6 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Kod
 {
@@ -15,18 +16,78 @@ namespace Kod
     {
         static void Main(string[] args)
         {
-           
-            var enc = new Encryption();
+            if (args.Length == 0)
+                {
+                System.Console.WriteLine("ERROR: No commands entered. See manual for available commands or run program with 'help'.");
+                return;
+                }
+
+           switch (args[0])
+            {
+                case "init":
+                
+
+                if (args.Length < 3)
+                    {
+                        System.Console.WriteLine("ERROR: 'init' requires path to client and server file");
+                        return;
+                    }
+
+                var client = new Client(args[1]);            //Sätta paths
+                var server = new Server(args[2]); 
+                
+                var user = new User();                           //ta in password
+                
+
+                var secret = new Secret();
+                var enc = new Encryption(); 
+                var vector = new InitVector();
+
+                System.Console.WriteLine("Secret key: " + secret.secretKey);
+
+                client.Write(enc.Serialize(secret));
+                server.Write(enc.Serialize(vector));
+
+                enc.vaultKey = enc.Derive(user.getData(), secret.secretKey);
+
+
+
+                break;
+
+                case "create":
+
+                break;
+
+                case "get":
+
+                break;
+
+                case "set":
+
+                break;
+
+                case "delete":
+
+                break;
+
+                case "secret":
+
+                break;
+
+                case "change":
+
+                break;
+            }
+        
+        
+            
  
             User afga = new User();                         //Skaffa användare, hämta clientPath, serverPath och master password.
             afga.Data();
 
-            var client = new Client(afga.clientPath);            //Sätta paths
-            var server = new Server(afga.serverPath);   
+             
 
 
-            Secret secret = new Secret();
-            InitVector vector = new InitVector();
 
 
             string serSecret = enc.Serialize(secret);     //serialisera secret key och skriv till client.json
@@ -40,9 +101,10 @@ namespace Kod
             string serVault = enc.Serialize(testVault);
 
 
-            enc.vaultKey = enc.Derive(afga.masterPwd, secret.secretKey);
+            
 
             string encryptVault = enc.Serialize(enc.EncryptVault(serVault, secret.secretKey, vector.iv)); //kryptera och serialisera vault
+
             System.Console.WriteLine(encryptVault);
 
         }

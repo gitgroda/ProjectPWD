@@ -6,9 +6,6 @@
 *.pdb
 *.user
 *.suo
+*.json
 .vs/
 
-# Projekt-specifika filer (Viktigt för säkerheten!)
-# Dessa skapas lokalt och ska inte delas via Git [cite: 43, 46]
-client.json
-server.json

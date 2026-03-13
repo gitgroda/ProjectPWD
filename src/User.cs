@@ -6,9 +6,9 @@ namespace Kod
 {
     public class User
     {
+        public string clientPath;
+        public string serverPath;
 
-
-        
 
         public string getData()
         {
@@ -16,14 +16,7 @@ namespace Kod
             return Console.ReadLine();
    
         }
-        public void Data()
-        {
-            //clientPath = @"C:\Users\alfre\OneDrive - Uppsala universitet\SKOLA\Information och IT-säkerhet\Kod\Client.json";
-            
-            //serverPath = @"C:\Users\alfre\OneDrive - Uppsala universitet\SKOLA\Information och IT-säkerhet\Kod\server.json";
- 
-
-        }
+     
         public Vault CreateVault()
         {
             return new Vault();
@@ -32,9 +25,6 @@ namespace Kod
         {
             System.Console.WriteLine("Enter new file path:");
             string newPath = Console.ReadLine();
-
-            
-
         }
           
     }

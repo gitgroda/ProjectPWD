@@ -7,33 +7,18 @@ namespace Kod
 {
     public class Server
     {
-        public string serverPath;
 
-        public string iv {get; set;}
+        public byte [] iv {get; set;}
 
+        public string vault {get; set;}
         
     
-    public Server(string path)
+    public Server(string vault, byte[] iv)
     {
-        this.serverPath = path;
+        this.vault = vault;
+        this.iv = iv;
+    }    
 
-    }
-    public void Write(string secret)
-        {
-            if (File.Exists(serverPath))
-            {
-                File.WriteAllText(serverPath, secret);
-            }
-            else if (!File.Exists(serverPath))
-            {
-                System.Console.WriteLine("File does not exist, creating new file...");
-                File.WriteAllText(serverPath, secret);
-            }
-            else
-            {
-                System.Console.WriteLine("ERROR: Unknown error");
-            }
-        }
 
     }
 }

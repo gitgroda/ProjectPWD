@@ -19,5 +19,9 @@ public class Secret
 
         }
     }
+    public Secret(byte[] secretkey)
+    {
+        this.secretKey = secretkey;
+    }
     
 }

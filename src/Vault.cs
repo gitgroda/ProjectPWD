@@ -40,12 +40,16 @@ public class Vault
         }
 
     }
-    public void Set(string key, string pass)
+    public bool Delete(string key)
     {
+        if (vault.ContainsKey(key))
+        {
+            vault.Remove(key);
+           Console.WriteLine($"Property '{key}' deleted.");
+            return true;
+        }
+        Console.WriteLine($"ERROR: Property '{key}' not found");
+        return false;
 
-        vault[key] = pass;
-        Console.WriteLine($"Property '{key}' updated in memory.");
-        
     }
-
 }

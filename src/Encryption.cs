@@ -31,11 +31,10 @@ public class Encryption
             if (File.Exists(path))
             {
                 File.WriteAllText(path, value);
-                System.Console.WriteLine("File created successfully");
             }
             else if (!File.Exists(path))
             {
-                System.Console.WriteLine("File does not exist, creating new file...");
+                System.Console.WriteLine($"File at {path} was created");
 
                 File.WriteAllText(path, value);
             }

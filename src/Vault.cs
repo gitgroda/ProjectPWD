@@ -23,7 +23,7 @@ public class Vault
         {
             return vault[key];
         }
-        return "Error: Key not found";
+        return "notfound";
     }   
     public void ListProperties()
     {

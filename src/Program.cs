@@ -89,9 +89,7 @@ namespace Kod
                             {
                                 System.Console.WriteLine("ERROR: Wrong password or secret key");
                                 return;
-                            }
-                            System.Console.WriteLine("Creating client file at "  + args[1]);
-                        
+                            }                        
                             var createSecret = new Secret(createSecretKey);
 
                             createEnc.Write(JsonSerializer.Serialize(createSecret), args[1]);
@@ -113,16 +111,13 @@ namespace Kod
                             System.Console.WriteLine("ERROR: 'get' requires path to client and server file");
                             return;
                         }
-                        string getPropKey;
+                        string getPropKey = "";
+
                         if(args.Length >= 4)
                         {
                             getPropKey = args[3];
                         }
-                        else
-                        {
-                            System.Console.WriteLine("Enter prop key");
-                            getPropKey = Console.ReadLine();
-                        }
+                    
                              
                         try
                         {
@@ -137,16 +132,16 @@ namespace Kod
 
                             Vault getVault = JsonSerializer.Deserialize<Vault>(getPlainText);
 
-                            string getResult = getVault.Get(getPropKey);
-                            if (getResult == "Error: Key not found")
+                            if (getVault.Get(getPropKey) == "notfound")
                             {
                                 getVault.ListProperties();
                                 return;
                             }
+                            else
+                            {
+                                System.Console.WriteLine(getVault.Get(getPropKey));
 
-                            System.Console.WriteLine(getResult);
-                           
-
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -190,7 +185,7 @@ namespace Kod
                         }
                         else
                         {
-                            System.Console.WriteLine("ERROR: provide prop key");
+                            System.Console.WriteLine("ERROR: Provide prop key");
                             return;
                         }
 
@@ -270,7 +265,6 @@ namespace Kod
 
                             deleteEnc.Write(JsonSerializer.Serialize<Server>(deleteServer), args[2]);
 
-                            System.Console.WriteLine($"Property '{deletePropKey}' deleted.");
                         }
                         catch
                         {
@@ -305,6 +299,7 @@ namespace Kod
                         if (args.Length < 3)
                         {
                             System.Console.WriteLine("ERROR: 'change' requires path to client and server file");
+                            return;
 
                         }
                         var changeEnc = new Encryption();
@@ -327,7 +322,7 @@ namespace Kod
 
                             changeEnc.Write(JsonSerializer.Serialize<Server>(changeServer), args[2]);
                             
-                            System.Console.WriteLine("Master password change succsesfully");
+                            System.Console.WriteLine("Master password changed successfully");
                         }
                         catch
                         {

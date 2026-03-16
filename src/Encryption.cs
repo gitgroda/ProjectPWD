@@ -19,8 +19,8 @@ public class Encryption
     }
 
     public byte[] Derive(string pwd, byte[] secretKey)
-    {   
-        using(var vaultKey = new Rfc2898DeriveBytes(pwd, secretKey, 600000, HashAlgorithmName.SHA256))
+    {   byte[] salt = secretKey;
+        using(var vaultKey = new Rfc2898DeriveBytes(pwd, salt, 600000, HashAlgorithmName.SHA256))
         {
             return vaultKey.GetBytes(32);
         }

@@ -34,8 +34,6 @@ namespace Kod
                     }
    
                 var user = new User();                           
-                
-
                 var initSecret = new Secret();
                 var initEnc = new Encryption(); 
                 var initVector = new InitVector();

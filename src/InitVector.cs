@@ -9,9 +9,9 @@ public class InitVector
     public byte[] iv {get; set;} 
 
 
-    public InitVector()
+    public InitVector() //skapa IV
     {
-        using (Aes aes = Aes.Create())
+        using (Aes aes = Aes.Create())  
         {
             iv = aes.IV;
                     

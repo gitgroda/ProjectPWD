@@ -9,3 +9,6 @@
 *.json
 .vs/
 
+# Tests
+VaultTests/
+

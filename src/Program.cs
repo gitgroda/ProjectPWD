@@ -13,9 +13,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Kod
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)      //alla funktioner följer liknande logik som i init, med avsaknad eller tillägg av diverese funktioner. 
+                                                    //logiken följer främst; läs client & server, skapa vault key, dekryptera / kryptera vault, 
+                                                    //spara vault-string till objekt, serialisera objekt och skriv till server. endast krypterade serverobjekt sparas till server.json
+                                                    
         {
             if (args.Length == 0)
                 {
@@ -46,7 +49,7 @@ namespace Kod
 
                     initEnc.vaultKey = initEnc.Derive(user.getData(), initSecret.secretKey);        //ta in password och skapa vault key
 
-                    var initVault = user.CreateVault();
+                    var initVault = user.CreateVault();                         //skapa vault
 
                     string initEncryptVault = initEnc.EncryptVault(initEnc.Serialize(initVault), initEnc.vaultKey, initVector.iv); //kryptera och serialisera vault
 
@@ -66,21 +69,23 @@ namespace Kod
                     {
                         if (args.Length < 3)
                         {
-                            System.Console.WriteLine("ERROR: 'create' requires path to client and server file");
+                            System.Console.WriteLine("ERROR: 'create' requires path to client, server");
                             return;
                         }
                         
                         var createEnc = new Encryption();
                         
-                        System.Console.WriteLine("Input secret key:");
                         
                         try
-                        {
+                        {   
+                            System.Console.WriteLine("Enter master password");
+                            string pwd = Console.ReadLine();
+                            System.Console.WriteLine("Enter secret key");
                             byte[] createSecretKey = Convert.FromBase64String(Console.ReadLine());
-                            System.Console.WriteLine("Input master password");
-                            createEnc.vaultKey = createEnc.Derive(Console.ReadLine(), createSecretKey); 
-                        
-                            Server createServer = createEnc.ServerRead(args[2]);
+
+                            createEnc.vaultKey = createEnc.Derive(pwd, createSecretKey); 
+
+                            var createServer = createEnc.ServerRead(args[2]);
 
                             string temp = createEnc.DecryptVault(createServer.vault, createEnc.vaultKey, createServer.iv);
                             if(temp == null)
@@ -88,7 +93,7 @@ namespace Kod
                                 System.Console.WriteLine("ERROR: Wrong password or secret key");
                                 return;
                             }                        
-                            var createSecret = new Secret(createSecretKey);
+                            var createSecret = new Client(Convert.ToBase64String(createSecretKey));
 
                             createEnc.Write(JsonSerializer.Serialize(createSecret), args[1]);
                             
@@ -100,6 +105,7 @@ namespace Kod
                         }
                     }
                 break;
+
 
                 case "get":
                     {
@@ -120,15 +126,15 @@ namespace Kod
                         try
                         {
                             var getEnc = new Encryption();
-                            Client getClient = getEnc.ClientRead(args[1]);
-                            Server getServer = getEnc.ServerRead(args[2]);
+                            var getClient = getEnc.ClientRead(args[1]);
+                            var getServer = getEnc.ServerRead(args[2]);
 
                             System.Console.WriteLine("Input master password");
                             getEnc.vaultKey = getEnc.Derive(Console.ReadLine(), Convert.FromBase64String(getClient.secretKey)); 
 
                             string getPlainText = getEnc.DecryptVault(getServer.vault, getEnc.vaultKey, getServer.iv);
 
-                            Vault getVault = JsonSerializer.Deserialize<Vault>(getPlainText);
+                            var getVault = JsonSerializer.Deserialize<Vault>(getPlainText);
 
                             if (getVault.Get(getPropKey) == "notfound")
                             {
@@ -141,9 +147,9 @@ namespace Kod
 
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            System.Console.WriteLine("error" + ex.Message);
+                            System.Console.WriteLine("ERROR: Unknown error");
                         }
                     }
                 break;
@@ -154,12 +160,15 @@ namespace Kod
                         if(args.Length < 3)
                         {
                             System.Console.WriteLine("ERROR: 'set' requires path to client and server file");
+                            return;
                         }
                         string setPropKey;
                         string generatedkey = "";
                         string inputKey = "";
 
                         var setEnc = new Encryption();
+                        System.Console.WriteLine("Enter master password");
+                        string pwd = Console.ReadLine();
 
                         if(args.Length == 5)
                         {
@@ -189,15 +198,14 @@ namespace Kod
 
                         try
                         {
-                            Client setClient = setEnc.ClientRead(args[1]);
-                            Server setServer = setEnc.ServerRead(args[2]);
+                            var setClient = setEnc.ClientRead(args[1]);
+                            var setServer = setEnc.ServerRead(args[2]);
 
-                            System.Console.WriteLine("Enter master password");
-                            setEnc.vaultKey = setEnc.Derive(Console.ReadLine(), Convert.FromBase64String(setClient.secretKey)); 
+                            setEnc.vaultKey = setEnc.Derive(pwd, Convert.FromBase64String(setClient.secretKey)); 
 
                             string setPlainText = setEnc.DecryptVault(setServer.vault, setEnc.vaultKey, setServer.iv);
 
-                            Vault setVault = JsonSerializer.Deserialize<Vault>(setPlainText);
+                            var setVault = JsonSerializer.Deserialize<Vault>(setPlainText);
 
                             if (args.Length == 5)
                             {
@@ -247,15 +255,15 @@ namespace Kod
                         
                         try
                         {
-                            Client deleteClient = deleteEnc.ClientRead(args[1]);
-                            Server deleteServer = deleteEnc.ServerRead(args[2]);
+                            var deleteClient = deleteEnc.ClientRead(args[1]);
+                            var deleteServer = deleteEnc.ServerRead(args[2]);
 
                             System.Console.WriteLine("Input master password:");
                             deleteEnc.vaultKey = deleteEnc.Derive(Console.ReadLine(), Convert.FromBase64String(deleteClient.secretKey));
 
                             string deletePlainText = deleteEnc.DecryptVault(deleteServer.vault, deleteEnc.vaultKey, deleteServer.iv);
 
-                            Vault deleteVault = JsonSerializer.Deserialize<Vault>(deletePlainText);
+                            var deleteVault = JsonSerializer.Deserialize<Vault>(deletePlainText);
 
                             deleteVault.Delete(deletePropKey);
 
@@ -282,7 +290,7 @@ namespace Kod
                         {
                             var secretEnc = new Encryption();
                             Client secretClient = secretEnc.ClientRead(args[1]);
-                            System.Console.WriteLine("Secret key: " + secretClient.secretKey);
+                            System.Console.WriteLine(secretClient.secretKey);
 
                         }
                         catch

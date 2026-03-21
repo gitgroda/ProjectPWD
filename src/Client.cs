@@ -5,9 +5,10 @@ using Microsoft.VisualBasic;
 
 namespace Kod
 {
-    public class Client
+    public class Client    
     {
         public string secretKey {get; set;}
+        public string serverPath {get; set;}
 
         public Client()
         {
